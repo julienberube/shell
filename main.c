@@ -34,7 +34,7 @@ char *checkinput() {
 }
 
 void processinput(char *in_str) {
-  if (*in_str == *"") {
+  if (*in_str == '\n') {
     printf("bru\n");
     return;
   } else {
@@ -48,15 +48,35 @@ void processinput(char *in_str) {
     }
   }
   int i = 0;
-  char *split[spaces + 1];
+  char *split[spaces];
   while (p != NULL) {
     split[i++] = p;
     p = strtok(NULL, " ");
   }
+  switch (hash_str(split[0])) {
+    case cd:
+      printf("cd");
+      break;
+    case ls:
+      printf("ls");
+      break;
+    case pwd:
+      printf("pwd");
+      break;
+    case cat:
+      printf("cat");
+      break;
+    case gcc:
+      printf("gcc");
+      break;
+    default:
+      printf("NOOOO");
+      break;
+  }
 }
 int hash_str(char *str) {
   int hash = 0;
-  for (int i = 0; i < strlen(str); i++) {
+  for (int i = 0; i < strlen(str) - 1; i++) {
     hash += (i + 1) * (int)(*(str + i));
     printf("%i\n", hash);
   }
