@@ -20,13 +20,10 @@ int main() {
   char *exit_str = "exit";
 
   while (strcmp(input, "exit") != 0) {
-    char *raw = checkinput();
-    strcpy(input, raw);
-    free(raw);
-    printf("blud");
+    input = checkinput();
 
     processinput(input);
-    printf("diddy$");
+    printf("diddy$ ");
   }
 }
 char *checkinput() {
@@ -38,15 +35,15 @@ char *checkinput() {
 
 void processinput(char *in_str) {
   if (*in_str == *"") {
-    printf("bru");
+    printf("bru\n");
     return;
   } else {
-    printf("bruh");
+    printf("bruh\n");
   }
   char *p = strtok(in_str, " ");
   int spaces = 0;
   for (int i = 0; i < strlen(in_str); i++) {
-    if (*(in_str + i) == "") {
+    if (*(in_str + i) == ' ') {
       spaces++;
     }
   }
