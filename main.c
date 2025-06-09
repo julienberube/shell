@@ -53,27 +53,8 @@ void processinput(char *in_str) {
     split[i++] = p;
     p = strtok(NULL, " ");
   }
-  switch (hash_str(split[0])) {
-    case cd:
-      printf("cd");
-      break;
-    case ls:
-      printf("ls");
-      break;
-    case pwd:
-      printf("pwd");
-      break;
-    case cat:
-      printf("cat");
-      break;
-    case gcc:
-      printf("gcc");
-      break;
-    default:
-      printf("NOOOO");
-      break;
-  }
 }
+
 int hash_str(char *str) {
   int hash = 0;
   for (int i = 0; i < strlen(str) - 1; i++) {
