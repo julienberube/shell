@@ -12,14 +12,14 @@
 char *checkinput();
 void processinput(char *in_str);
 int hash_str(char *str);
+int execute(char* split[]);
 
-enum commands { cd = 299, ls = 338, pwd = 650, cat = 641, gcc = 598 };
 int main() {
   printf("diddy$ ");
   char *input = "foo";
   char *exit_str = "exit";
 
-  while (strcmp(input, "exit") != 0) {
+  while (strcmp(input, "exit\n") != 0) {
     input = checkinput();
 
     processinput(input);
@@ -53,6 +53,10 @@ void processinput(char *in_str) {
     split[i++] = p;
     p = strtok(NULL, " ");
   }
+  if (*(split[0] + strlen(split[0] - 1)) == '\n'){
+    *(split[0] + strlen(split[0] - 1)) = '\0';  
+  }
+  execute(split);
 }
 
 int hash_str(char *str) {
@@ -64,3 +68,16 @@ int hash_str(char *str) {
   return hash;
 }
 
+int execute(char* split[]) {
+   
+  pid_t id;
+  if ((id = fork()) != 0) {
+    wait(&id);
+  }
+  else {
+    execv(split[0], NULL);
+    printf("esti de bs");
+    exit(0);
+  }
+  return 0;
+}
