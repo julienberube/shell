@@ -16,8 +16,8 @@ int execute(char* split[]);
 int main() {
   char *input = "foo";
 
-  while (strcmp(input, "exit\n") != 0) {
-    printf("diddy$ ");
+  while (strcmp(input, "exit") != 0) {
+    printf("HAL$ ");
     input = checkinput();
 
     processinput(input);
@@ -36,7 +36,6 @@ void processinput(char *in_str) {
     return;
   } 
   in_str[strlen(in_str) - 1] = '\0';
-  printf("%lu", strlen(in_str));
 
   char *p = strtok(in_str, " ");
   int spaces = 0;
@@ -58,20 +57,19 @@ void processinput(char *in_str) {
       split[i++] = p;
       p = strtok(NULL, " ");
     }
-    split[spaces] = NULL;
+    split[i] = NULL;
     execute(split);
   }
 }
 
 int execute(char* args[]) {
   pid_t id;
-  // if ((id = fork()) != 0) {
-   // wait(&id);
-  //}
-  //else
-  
-  int exit = execvp(args[0], args);
-    // exit(0);
-  
+  if ((id = fork()) != 0) {
+    wait(&id);
+  }
+  else {
+    execvp(args[0], args);
+    exit(0); 
+  } 
   return 0;
 }
