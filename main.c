@@ -11,19 +11,16 @@
 
 char *checkinput();
 void processinput(char *in_str);
-int hash_str(char *str);
 int execute(char* split[]);
 
 int main() {
-  printf("diddy$ ");
   char *input = "foo";
-  char *exit_str = "exit";
 
   while (strcmp(input, "exit\n") != 0) {
+    printf("diddy$ ");
     input = checkinput();
 
     processinput(input);
-    printf("diddy$ ");
   }
 }
 char *checkinput() {
@@ -37,9 +34,10 @@ void processinput(char *in_str) {
   if (*in_str == '\n') {
     printf("bru\n");
     return;
-  } else {
-    printf("bruh\n");
-  }
+  } 
+  in_str[strlen(in_str) - 1] = '\0';
+  printf("%lu", strlen(in_str));
+
   char *p = strtok(in_str, " ");
   int spaces = 0;
   for (int i = 0; i < strlen(in_str); i++) {
@@ -47,37 +45,33 @@ void processinput(char *in_str) {
       spaces++;
     }
   }
-  int i = 0;
-  char *split[spaces];
-  while (p != NULL) {
-    split[i++] = p;
-    p = strtok(NULL, " ");
-  }
-  if (*(split[0] + strlen(split[0] - 1)) == '\n'){
-    *(split[0] + strlen(split[0] - 1)) = '\0';  
-  }
-  execute(split);
-}
-
-int hash_str(char *str) {
-  int hash = 0;
-  for (int i = 0; i < strlen(str) - 1; i++) {
-    hash += (i + 1) * (int)(*(str + i));
-    printf("%i\n", hash);
-  }
-  return hash;
-}
-
-int execute(char* split[]) {
-   
-  pid_t id;
-  if ((id = fork()) != 0) {
-    wait(&id);
+  if (spaces == 0) {
+    char *args[2];
+    args[0] = in_str;
+    args[1] = NULL;
+    execute(args);
   }
   else {
-    execv(split[0], NULL);
-    printf("esti de bs");
-    exit(0);
+    int i = 0;
+    char *split[spaces + 1];
+    while (p != NULL) {
+      split[i++] = p;
+      p = strtok(NULL, " ");
+    }
+    split[spaces] = NULL;
+    execute(split);
   }
+}
+
+int execute(char* args[]) {
+  pid_t id;
+  // if ((id = fork()) != 0) {
+   // wait(&id);
+  //}
+  //else
+  
+  int exit = execvp(args[0], args);
+    // exit(0);
+  
   return 0;
 }
