@@ -36,14 +36,14 @@ void processinput(char *in_str) {
     return;
   } 
   in_str[strlen(in_str) - 1] = '\0';
-
-  char *p = strtok(in_str, " ");
   int spaces = 0;
   for (int i = 0; i < strlen(in_str); i++) {
     if (*(in_str + i) == ' ') {
       spaces++;
     }
   }
+  char *p = strtok(in_str, " ");
+
   if (spaces == 0) {
     char *args[2];
     args[0] = in_str;
@@ -52,7 +52,7 @@ void processinput(char *in_str) {
   }
   else {
     int i = 0;
-    char *split[spaces + 1];
+    char *split[spaces];
     while (p != NULL) {
       split[i++] = p;
       p = strtok(NULL, " ");
